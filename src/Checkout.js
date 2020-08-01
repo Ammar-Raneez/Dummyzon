@@ -3,12 +3,14 @@ import { useStateValue } from './StateProvider'
 import "./Checkout.css"
 import CheckoutProduct from './CheckoutProduct';
 import Subtotal from './Subtotal';
+import { useHistory } from 'react-router-dom';
 
 function Checkout() {
     //dispatch is needed only when you manupilate the state
-    const [{ basket }] = useStateValue();
+    const [{ user, basket }] = useStateValue();
+    const history = useHistory();
 
-    return (
+    return (user?.email ? (
         <div className="checkout">
             <div className="checkout__left">
                 <img className="checkout__ad" alt="ad"
@@ -42,6 +44,11 @@ function Checkout() {
                 </div>
             )}
         </div>
+    ) : (
+        <div>
+            {history.push('/')}
+        </div>
+        )
     )
 }
 

@@ -4,7 +4,7 @@ import { useStateValue } from './StateProvider'
 
 function CheckoutProduct({ id, title, image, price, rating }) {
     //you dont have to include both basket and dispatch, include only what is necessary
-    const [dispatch] = useStateValue();
+    const [{ basket }, dispatch] = useStateValue();
 
     const removeFromBasket = () => {
         dispatch({

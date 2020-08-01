@@ -3,7 +3,7 @@ import './Product.css'
 import { useStateValue } from './StateProvider'
 
 function Product({ id, title, price, rating, image }) {
-    const [dispatch] = useStateValue();
+    const [{ user }, dispatch] = useStateValue();
 
     //add item to basket
     const addToBasket = () => {
@@ -32,7 +32,7 @@ function Product({ id, title, price, rating, image }) {
                 </div>
             </div>
             <img src={image} alt="Product" />
-            <button onClick={addToBasket}>Add to Basket</button>
+            {user && <button onClick={addToBasket}>Add to Basket</button>}
         </div>
     )/*create an array of size rating, fill it, map through the array size, and for each display a start*/
 }

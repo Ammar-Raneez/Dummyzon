@@ -11,29 +11,29 @@ function Home() {
 
             <div className="home__row">
                 {/*products, take id, title, price, rating and image*/}
-                <Product id={1} title="Some images title" price="10$" rating={5}
+                <Product id={1} title="Some images title" price={10} rating={5}
                     image="https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg"
                 />
-                <Product id={1} title="Some images title" price="10$" rating={5}
+                <Product id={2} title="Some images title" price={10} rating={5}
                     image="https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg"
                 />
             </div>
 
             <div className="home__row">
                 {/*products, take id, title, price, rating and image*/}
-                <Product id={1} title="Some images title" price="10$" rating={5}
+                <Product id={3} title="Some images title" price={10} rating={5}
                     image="https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg"
                 />
-                <Product id={1} title="Some images title" price="10$" rating={5}
+                <Product id={4} title="Some images title" price={10} rating={5}
                     image="https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg"
                 />
-                <Product id={1} title="Some images title" price="10$" rating={5}
+                <Product id={5} title="Some images title" price={10} rating={5}
                     image="https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg"
                 />
             </div>
 
             <div className="home__row">
-                <Product id={1} title="Some images title" price="10$" rating={5}
+                <Product id={6} title="Some images title" price={10} rating={5}
                     image="https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg"
                 />
             </div>

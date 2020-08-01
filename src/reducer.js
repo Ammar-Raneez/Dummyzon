@@ -1,12 +1,19 @@
 //we need access to these globally
 export const initalState = {
-    basket: []  //add to basket and many more areas need access to this, in order to actually update our basket
+    basket: [],  //add to basket and many more areas need access to this, in order to actually update our basket
+    user: null
 }
+
+//*higher order function reduce, used mainly to "reduce" a bunch of values to single value
+//*in this case we iterate thru the basket and add their price to a variable amount and return it
+//*the amount starts from 0
+export const getBasketTotal = basket => 
+    basket?.reduce((amount, item) => item.price + amount, 0);
 
 //we manupilate the state through actions via action types, just like on redux
 function reducer(state, action) {
-    console.log(action)
     switch(action.type) {
+        //*After every action we must return what the new state looks like
         //add to basket action type
         case 'ADD_TO_BASKET':
             //what the new data layer will look like, whenever we dispatch the actions
@@ -18,10 +25,24 @@ function reducer(state, action) {
                 basket: [...state.basket, action.payload]
             }
         case 'REMOVE_FROM_BASKET':
-            return { state }
+            let tempCurrentBasket = [...state.basket]
+            //check if the id of the item we removed (action.id) is equal to an item id of our basket, which must return the index
+            let indexOfItem = state.basket.findIndex(basketItem => basketItem.id === action.id);
+
+            if(indexOfItem >= 0) {
+                //item exists in basket, remove it
+                //at found index, remove 1 item, it removes 1 item from that index
+                tempCurrentBasket.splice(indexOfItem, 1);
+            } else {
+                console.warn(`Cant remove product {id: ${action.id}, as it is not in the basket}`)
+            }
+            return {
+                //return the same state, but our new spliced basket
+                ...state, basket: tempCurrentBasket
+            }
         //if there's no action just return the state
         default:
-            return { state };
+            return state;
     }
 }
 

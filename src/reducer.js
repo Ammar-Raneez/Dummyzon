@@ -13,6 +13,10 @@ export const getBasketTotal = basket =>
 //we manupilate the state through actions via action types, just like on redux
 function reducer(state, action) {
     switch(action.type) {
+        case 'SET_USER':
+            return {
+                ...state, user: action.user
+            }
         //*After every action we must return what the new state looks like
         //add to basket action type
         case 'ADD_TO_BASKET':

@@ -1,11 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Header from './Header';
 import Home from './Home';
 import Checkout from './Checkout';
+import Login from './Login';
+import { useStateValue } from './StateProvider';
+import { auth } from './firebase';
 
 function App() {
+	const[{ user }, dispatch] = useStateValue();
+
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged(authUser => {
+			if(authUser) {
+			//user is logged in, we set the user in our reducer (so it can be accessed everywhere)
+				dispatch({
+					type: 'SET_USER',
+					user: authUser
+				})
+			} else {
+			//user is logged out
+				dispatch({
+					type: 'SET_USER',
+					user: null
+				})
+			}
+		}) 
+
+		//any cleanup operations go in here (on a refresh (unrender) this is run and everything cleans up)
+		return () => {
+			//returned from auth, this detaches the listener if refreshed, and reattaches it
+			unsubscribe();
+		}
+	}, [])
+	console.log(user)
+
+
 	return (
 		<Router>
 			<Switch>
@@ -15,7 +46,7 @@ function App() {
 				</Route>
 
 				<Route path="/login">
-					
+					<Login />
 				</Route>
 				
 				{/*default and fallback for any route*/}

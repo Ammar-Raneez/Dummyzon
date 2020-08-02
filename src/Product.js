@@ -18,8 +18,7 @@ function Product({ id, title, price, rating, image }) {
                 price: price,
                 rating: rating
             }
-        }
-        )
+        })
 //*The idea behind having different baskets for different users, is creating different collections
 //*in the firestore database for each email
         //updating firebase database, whenever there's an add action

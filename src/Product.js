@@ -1,12 +1,14 @@
 import React from 'react'
 import './Product.css'
 import { useStateValue } from './StateProvider'
+import { db } from './firebase';
 
 function Product({ id, title, price, rating, image }) {
     const [{ user }, dispatch] = useStateValue();
 
     //add item to basket
     const addToBasket = () => {
+        //context api way
         dispatch({
             type: 'ADD_TO_BASKET',
             payload: {
@@ -16,8 +18,17 @@ function Product({ id, title, price, rating, image }) {
                 price: price,
                 rating: rating
             }
+        }
+        )
+        //updating firebase database
+        db.collection('basketItems').add({
+            id: id,
+            title: title,
+            image: image,
+            price: price,
+            rating: rating            
         })
-    }
+    }       
 
     return (
         <div className="product">

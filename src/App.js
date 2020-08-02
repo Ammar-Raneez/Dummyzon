@@ -6,10 +6,23 @@ import Home from './Home';
 import Checkout from './Checkout';
 import Login from './Login';
 import { useStateValue } from './StateProvider';
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 
 function App() {
-	const[{ user }, dispatch] = useStateValue();
+	const[{ user, basket }, dispatch] = useStateValue();
+
+	//fetching stored basket from database, if page reloads
+	useEffect(() => {
+		db.collection('basketItems')
+			.onSnapshot(snapshot => {
+				dispatch({
+					type: 'UPDATE_BASKET',
+					payload: snapshot.docs
+				})	
+			})
+		return () => {
+		}
+	}, [dispatch])
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged(authUser => {
@@ -33,9 +46,7 @@ function App() {
 			//returned from auth, this detaches the listener if refreshed, and reattaches it
 			unsubscribe();
 		}
-	}, [])
-	console.log(user)
-
+	}, [dispatch])
 
 	return (
 		<Router>

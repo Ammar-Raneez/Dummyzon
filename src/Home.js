@@ -1,18 +1,50 @@
 import React from 'react'
 import './Home.css'
 import Product from './Product'
+import { UncontrolledCarousel } from 'reactstrap'
 
 //data obtained from scraping amazon
 import data from './data.json';
 
 var products = data.products;
 
+const items = [
+    {
+        src: "https://images-eu.ssl-images-amazon.com/images/G/02/AmazonMusic/2020/Programming/071020_TheSummerSessions/073120/UK-EN_071020_SummerSessions_ACQ_GW_Hero_D_1500x600_CV5._CB409228348_.jpg",
+        altText: 'Summer Collection',
+        key: '1'
+    }, 
+    {
+        src: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_Computers_1x._CB432469755_.jpg",
+        altText: 'Shop Computers and Accessories',
+        key: '2'
+    },
+    {
+        src: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_Toys_en_US_1x._CB431858161_.jpg",
+        altText: 'Shop Toys and Games',
+        key: '3'
+    },
+    {
+        src: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_Sports_en_US_1x._CB431860448_.jpg",
+        altText: 'Shop Sports and Outdoor',
+        key: '4'
+    },
+    {
+        src: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_Beauty_v2_en_US_2x._CB429089928_.jpg",
+        altText: "Shop our Beauty Selection",
+        key: '5'
+    },
+    {
+        src: "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_Home_v2_en_US_1x._CB429090084_.jpg",
+        altText: "Shop the Home Store",
+        key: '6'
+    }
+]
+
 function Home() {
     return (
         <div className="home">
-            <img src="https://images-eu.ssl-images-amazon.com/images/G/02/AmazonMusic/2020/Programming/071020_TheSummerSessions/073120/UK-EN_071020_SummerSessions_ACQ_GW_Hero_D_1500x600_CV5._CB409228348_.jpg" 
-                alt="Banner" className="home__image"
-            />
+            <UncontrolledCarousel className="home__image" items={items}/>
 
             <div className="home__row">
                 {/*products, take id, title, price, rating and image*/}

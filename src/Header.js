@@ -24,7 +24,8 @@ function Header() {
         <div className="header">
             {/*logo on the left, wrap logo within Link tags so that we can navigate*/}
             <Link to="/">
-                <img className="header__logo" src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" alt="Logo" />
+                {/* <img className="header__logo" src="https://pngimg.com/uploads/amazon/amazon_PNG11.png" alt="Logo" /> */}
+                <h2 className="header__logo">Dummyzon🛒</h2>
             </Link>
 
             {/*search box*/}
@@ -41,11 +42,11 @@ function Header() {
                         <span className="header__optionLine1">
                             {`Hello ${user ? user?.email.substring(0, user.email.indexOf("@"))  + "!" : "Stranger!"}`}
                         </span>
-                        <span className="header__optionLine2">{user? 'Sign Out' : 'Sign In'}</span>
+                        <span className="header__optionLine2">{user? 'Sign Out' : 'Sign In/ Register'}</span>
                     </div>
                 </Link>
                 
-                <Link to="/" className="header__link">
+                {/* <Link to="/" className="header__link">
                     <div className="header__options">
                         <span className="header__optionLine1">Returns</span>
                         <span className="header__optionLine2">Orders</span>
@@ -57,7 +58,7 @@ function Header() {
                         <span className="header__optionLine1">Your</span>
                         <span className="header__optionLine2">Prime</span>
                     </div>
-                </Link>
+                </Link> */}
 
                 {/*shopping basket icon and no of items in basket*/}
 {/*if there's a user, direct to checkout, else to login, this is for when you click the shopping icon directly from header*/}

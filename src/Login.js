@@ -50,9 +50,7 @@ function Login() {
     return (
         <div className="login">
             <Link to="/">
-                <img alt="Logo" className="login__logo"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
-                />
+                <img alt="Logo" className="login__logo" src="./logo.png" />
             </Link>
 
             <div className="login__container">
@@ -65,8 +63,8 @@ function Login() {
                     <button onClick={login} type="submit" className="login_signInButton">Sign In</button>
                 </form>
 
-                <p>By signing-in you agree to Amazon's conditions of Use & Sale. Please see our privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.</p>
-                <button onClick={register} className="login_registerButton">Create your Amazon Account</button>
+                <p>By signing-in you agree to Dummyzon's conditions of Use & Sale. Please see our privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.</p>
+                <button onClick={register} className="login_registerButton">Create your Dummyzon Account</button>
             </div>
         </div>
     )

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300&display=swap');
+
 .header {
     background-color: #131921;
     display: flex;
@@ -6,12 +8,16 @@
     top: 0;
     z-index: 100;
 }
+.header a, .header a:hover {
+    text-decoration: none;
+    color: white;
+}
+
 
 .header__logo {
-    width: 100px;
-    margin: 16px 20px 0px 20px;
-    cursor: pointer;
-    object-fit: contain;
+    color: white;
+    margin: 5px;
+    font-family: 'Oxanium';
 }
 
 .header__search {
@@ -22,7 +28,7 @@
 .header__searchInput {
 /*by keeping height min and increasing padding, we can keep the text centered*/
     height: 12px;
-    padding: 10px;
+    padding: 11px;
     border: none;
     width: 100%;
 }

@@ -6,6 +6,9 @@ import * as serviceWorker from './serviceWorker';
 import { StateProvider } from './StateProvider';
 import reducer, { initalState } from './reducer';
 
+//for reactstrap
+import 'bootstrap/dist/css/bootstrap.css';
+
 ReactDOM.render(
   <React.StrictMode>
 {/*entire app has access to our StateProvider now, takes in initialState and reducer props, since its passed in the value att*/}

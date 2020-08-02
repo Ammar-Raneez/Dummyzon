@@ -14,7 +14,9 @@ export const getBasketTotal = basket =>
 
 //we manupilate the state through actions via action types, just like on redux
 function reducer(state, action) {
+//*After every action we must return what the new state looks like
     switch(action.type) {
+        //sets user
         case 'SET_USER':
             return {
                 ...state, user: action.user
@@ -23,15 +25,14 @@ function reducer(state, action) {
 
         //updating basket on refresh (fetch data from firebase store)
         case 'UPDATE_BASKET':
-            let updatdBasket = []
-            action.payload.map(doc => updatdBasket.push(doc.data()))
+            let updatedBasket = []
+            action.payload.map(doc => updatedBasket.push(doc.data()))
             return {
-                ...state, basket: updatdBasket
+                ...state, basket: updatedBasket
             }
 
 
-        //*After every action we must return what the new state looks like
-        //add to basket action type
+        //add to basket
         case 'ADD_TO_BASKET':
             //what the new data layer will look like, whenever we dispatch the actions
             return { 
@@ -43,6 +44,7 @@ function reducer(state, action) {
             }
 
 
+        //remove item from basket, we'll need to update our database here as well
         case 'REMOVE_FROM_BASKET':
             let tempCurrentBasket = [...state.basket]
             //check if the id of the item we removed (action.id) is equal to an item id of our basket, which must return the index
@@ -54,11 +56,11 @@ function reducer(state, action) {
                 tempCurrentBasket.splice(indexOfItem, 1);
 
                 //update our database, remove all the documents and re-update with the updated basket
-                db.collection('basketItems').get().then(
+                db.collection(`${state.user.email} basket`).get().then(
                     res => res.forEach(element => element.ref.delete())
                 )
                 tempCurrentBasket.forEach(item => {
-                    db.collection('basketItems').add({
+                    db.collection(`${state.user.email} basket`).add({
                         id: item.id,
                         title: item.title,
                         image: item.image,
@@ -66,6 +68,7 @@ function reducer(state, action) {
                         rating: item.rating
                     })
                 })
+
             } else {
                 console.warn(`Cant remove product {id: ${action.id}, as it is not in the basket}`)
             }
@@ -73,6 +76,15 @@ function reducer(state, action) {
                 //return the same state, but our new spliced basket
                 ...state, basket: tempCurrentBasket
             }
+
+
+        //reset basket to empty (to run whenever we log out)
+        case 'RESET_BASKET':
+            return {
+                ...state, basket: []
+            }
+
+
         //if there's no action just return the state
         default:
             return state;

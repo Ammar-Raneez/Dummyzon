@@ -10,6 +10,8 @@ function Checkout() {
     const [{ user, basket }] = useStateValue();
     const history = useHistory();
 
+    //redirect checkout to login page if there's no current user, this is needed if the user clicks logout 
+    //while in the checkout page, we'll need to redirect em to the homepage
     return (user?.email ? (
         <div className="checkout">
             <div className="checkout__left">

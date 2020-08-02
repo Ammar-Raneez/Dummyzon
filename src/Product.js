@@ -20,8 +20,10 @@ function Product({ id, title, price, rating, image }) {
             }
         }
         )
-        //updating firebase database
-        db.collection('basketItems').add({
+//*The idea behind having different baskets for different users, is creating different collections
+//*in the firestore database for each email
+        //updating firebase database, whenever there's an add action
+        db.collection(`${user.email} basket`).add({
             id: id,
             title: title,
             image: image,
@@ -43,6 +45,7 @@ function Product({ id, title, price, rating, image }) {
                 </div>
             </div>
             <img src={image} alt="Product" />
+            {/* show add to basket button only if there's a current user */}
             {user && <button onClick={addToBasket}>Add to Basket</button>}
         </div>
     )/*create an array of size rating, fill it, map through the array size, and for each display a start*/

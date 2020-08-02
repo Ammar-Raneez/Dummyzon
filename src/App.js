@@ -9,22 +9,9 @@ import { useStateValue } from './StateProvider';
 import { auth, db } from './firebase';
 
 function App() {
-	const[{ user, basket }, dispatch] = useStateValue();
+	const[{ user }, dispatch] = useStateValue();
 
-	//fetching stored basket from database, if page reloads
-	useEffect(() => {
-		db.collection('basketItems')
-			.onSnapshot(snapshot => {
-				dispatch({
-					type: 'UPDATE_BASKET',
-					payload: snapshot.docs
-				})	
-			})
-		return () => {
-		}
-	}, [dispatch])
-
-	useEffect(() => {
+	useEffect(() => {	
 		const unsubscribe = auth.onAuthStateChanged(authUser => {
 			if(authUser) {
 			//user is logged in, we set the user in our reducer (so it can be accessed everywhere)
@@ -32,6 +19,15 @@ function App() {
 					type: 'SET_USER',
 					user: authUser
 				})
+			//update basket of the current user upon page load (currently logged in user)
+				db.collection(`${user?.email} basket`)
+				.onSnapshot(snapshot => {
+					dispatch({
+						type: 'UPDATE_BASKET',
+						payload: snapshot.docs
+					})	
+				})
+
 			} else {
 			//user is logged out
 				dispatch({
@@ -39,14 +35,14 @@ function App() {
 					user: null
 				})
 			}
-		}) 
+		})
 
 		//any cleanup operations go in here (on a refresh (unrender) this is run and everything cleans up)
 		return () => {
 			//returned from auth, this detaches the listener if refreshed, and reattaches it
 			unsubscribe();
 		}
-	}, [dispatch])
+	}, [dispatch, user?.email])	//when our user changes, we must run this again, in order to update
 
 	return (
 		<Router>
@@ -59,7 +55,7 @@ function App() {
 				<Route path="/login">
 					<Login />
 				</Route>
-				
+
 				{/*default and fallback for any route*/}
 				<Route path="/">
 					<Header />  

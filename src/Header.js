@@ -9,11 +9,14 @@ import { auth } from './firebase'
 
 function Header() {
     //useState value returns the state and a dispatch, we dont dspatch any action thru header so we no need dispatch returned
-    const [{ basket, user }] = useStateValue();
+    const [{ basket, user }, dispatch] = useStateValue();
 
     const login = () => {
         if(user) {
             auth.signOut()
+            dispatch({
+                type: 'RESET_BASKET'    //reset basket when you logout
+            })
         }
     }
 
@@ -32,9 +35,12 @@ function Header() {
 
             {/*3 links*/}
             <div className="header__nav">
+            {/*redirect to login page only if there's no current user, else log them out*/}
                 <Link to={!user && `/login`} className="header__link">
                     <div onClick={login} className="header__options">
-                        <span className="header__optionLine1">Hello {user?.email}</span>
+                        <span className="header__optionLine1">
+                            {`Hello ${user ? user?.email.substring(0, user.email.indexOf("@"))  + "!" : "Stranger!"}`}
+                        </span>
                         <span className="header__optionLine2">{user? 'Sign Out' : 'Sign In'}</span>
                     </div>
                 </Link>
@@ -54,7 +60,7 @@ function Header() {
                 </Link>
 
                 {/*shopping basket icon and no of items in basket*/}
-                
+{/*if there's a user, direct to checkout, else to login, this is for when you click the shopping icon directly from header*/}
                 <Link to={user? "/checkout" : "/login"} className="header__link">
                     <div className="header__optionBasket">
                         <ShoppingBasketIcon />
@@ -62,8 +68,6 @@ function Header() {
                     </div>
                 </Link>
             </div>
-
-            {/*basket icon with number*/}
         </div>
     )
 }

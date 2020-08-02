@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import './Login.css'
 import { Link, useHistory } from 'react-router-dom';
-import { auth } from './firebase';
+import { auth, db } from './firebase';
+import { useStateValue } from './StateProvider';
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -9,16 +10,27 @@ function Login() {
     //a react hook that keeps track of browser history
     const history = useHistory();
 
+    const [{ user }, dispatch] = useStateValue();
+
     //login stuff
     const login = event => {
         event.preventDefault();
 
         auth.signInWithEmailAndPassword(email, password)
             .then( auth => {
+                //update basket items on login                    
                 //logged in, redirect to homepage
-//*push the homepage link to history array, we push it rather than replacing cuz the regular action of browsers are you can nagivate back so many times
-//*we push homepage onto history so we can navigate to the homepage
+//*push the homepage link to history array, we push it rather than replacing cuz the regular action of browsers is 
+//*that you can nagivate back and forth so many pages, we push homepage onto history so we can navigate to the homepage
                 history.push("/");  //redirect only inside the then block: only if there's no errors
+
+                db.collection(`${user?.email} basket`)
+                .onSnapshot(snapshot => {
+                    dispatch({
+                        type: 'UPDATE_BASKET',
+                        payload: snapshot.docs
+                    })	
+                })
             })
             .catch(error => alert(error))
     }
@@ -29,7 +41,7 @@ function Login() {
 
         auth.createUserWithEmailAndPassword(email, password)
             .then( auth => {
-                //created a user and logged in, redirect to homepage
+                //creates the new user, logs him in and redirects to homepage
                 history.push("/");
             })
             .catch( error => alert(error))

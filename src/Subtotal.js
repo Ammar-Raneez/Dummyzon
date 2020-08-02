@@ -9,13 +9,13 @@ function Subtotal() {
 
     return (
         <div className="subtotal">
-            {/*price*/}
+            {/*price, CurrencyFormat is for total formatting*/}
             <CurrencyFormat decimalScale={2} value={getBasketTotal(basket)}
                 displayType={"text"} thousandSeparator={true} prefix={"$"}
                 renderText={value => (
                     <React.Fragment>
                         <p>
-                            Subtotal {basket.length} items: <strong>{`${value}`}</strong>
+                            Subtotal {basket?.length} items: <strong>{`${value}`}</strong>
                         </p>
                         <small className="subtotal__gift">
                             <input type="checkbox" /> This order contains a gift

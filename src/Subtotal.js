@@ -11,7 +11,7 @@ function Subtotal() {
         <div className="subtotal">
             {/*price, CurrencyFormat is for total formatting*/}
             <CurrencyFormat decimalScale={2} value={getBasketTotal(basket)}
-                displayType={"text"} thousandSeparator={true} prefix={"$"}
+                displayType={"text"} thousandSeparator={true} prefix={"€"}
                 renderText={value => (
                     <React.Fragment>
                         <p>
